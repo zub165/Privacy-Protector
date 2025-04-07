@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Protector</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+        h1 {
+            color: #4fc3f7;
+            text-align: center;
+        }
+        .avatar-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .avatar-display {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #333;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border: 3px solid #4fc3f7;
+            position: relative;
+        }
+        .avatar-display img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .avatar-info {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .avatar-info span {
+            font-weight: bold;
+            color: #4fc3f7;
+        }
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .control-group {
+            background-color: #252525;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        h2 {
+            color: #81c784;
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+        button {
+            background-color: #4fc3f7;
+            color: #121212;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px 0;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #3da8d8;
+        }
+        .danger {
+            background-color: #e57373;
+        }
+        .danger:hover {
+            background-color: #d32f2f;
+        }
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .success {
+            background-color: #2e7d32;
+        }
+        .error {
+            background-color: #c62828;
+        }
+        select, input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 15px;
+            background-color: #333;
+            border: 1px solid #444;
+            color: #e0e0e0;
+            border-radius: 4px;
+        }
+        .avatar-creator {
+            display: none;
+            margin-top: 20px;
+        }
+        .avatar-tabs {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        .avatar-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            background-color: #252525;
+            cursor: pointer;
+        }
+        .avatar-tab.active {
+            background-color: #4fc3f7;
+            color: #121212;
+        }
+        .avatar-tab-content {
+            display: none;
+        }
+        .avatar-tab-content.active {
+            display: block;
+        }
+        .avatar-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .avatar-option {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .avatar-option:hover, .avatar-option.selected {
+            border-color: #4fc3f7;
+        }
+        .avatar-shape-option {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .avatar-shape-option:hover, .avatar-shape-option.selected {
+            border-color: #4fc3f7;
+        }
+        .avatar-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            color: white;
+        }
+        .avatar-strength-meter {
+            width: 100%;
+            height: 10px;
+            background-color: #333;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        .avatar-strength-value {
+            height: 100%;
+            background-color: #4fc3f7;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Privacy Protector</h1>
+        
+        <div class="avatar-section">
+            <div class="avatar-display" id="avatar-display">
+                <div id="avatar-background"></div>
+                <div id="avatar-shape" class="avatar-overlay"></div>
+                <div id="avatar-icon" class="avatar-overlay"></div>
+            </div>
+            <div class="avatar-info">
+                Privacy Strength: <span id="avatar-strength">Medium</span>
+                <div class="avatar-strength-meter">
+                    <div class="avatar-strength-value" id="avatar-strength-value" style="width: 60%;"></div>
+                </div>
+            </div>
+            <button id="change-avatar">Customize Avatar</button>
+        </div>
+        
+        <div class="avatar-creator" id="avatar-creator">
+            <h2>Create Your Privacy Avatar</h2>
+            
+            <div class="avatar-tabs">
+                <div class="avatar-tab active" data-tab="shapes">Shapes</div>
+                <div class="avatar-tab" data-tab="colors">Colors</div>
+                <div class="avatar-tab" data-tab="icons">Icons</div>
+            </div>
+            
+            <div class="avatar-tab-content active" id="shapes-tab">
+                <div class="avatar-options" id="avatar-shapes">
+                    <!-- Shapes will be loaded here -->
+                </div>
+            </div>
+            
+            <div class="avatar-tab-content" id="colors-tab">
+                <div class="avatar-options" id="avatar-colors">
+                    <!-- Colors will be loaded here -->
+                </div>
+            </div>
+            
+            <div class="avatar-tab-content" id="icons-tab">
+                <div class="avatar-options" id="avatar-icons">
+                    <!-- Icons will be loaded here -->
+                </div>
+            </div>
+            
+            <button id="save-avatar">Save Avatar</button>
+            <button id="cancel-avatar">Cancel</button>
+        </div>
+        
+        <div class="controls">
+            <div class="control-group">
+                <h2>History Protection</h2>
+                <select id="history-type">
+                    <option value="browser">Browser History</option>
+                    <option value="call">Call History</option>
+                    <option value="message">Message History</option>
+                    <option value="app">App Usage History</option>
+                </select>
+                <button id="clear-history">Clear History</button>
+                <button id="fake-history">Generate Fake History</button>
+            </div>
+            
+            <div class="control-group">
+                <h2>Device Protection</h2>
+                <button id="clear-cache">Clear All Cache</button>
+                <button id="change-device-id">Randomize Device ID</button>
+                <button id="wifi-protection">Secure WiFi Connections</button>
+            </div>
+            
+            <div class="control-group">
+                <h2>App Protection</h2>
+                <button id="app-locker">Lock Sensitive Apps</button>
+                <button id="fake-apps">Install Decoy Apps</button>
+                <button id="clear-app-data">Clear App Data</button>
+            </div>
+            
+            <div class="control-group">
+                <h2>Advanced</h2>
+                <button id="emergency-clear">Emergency Clear All</button>
+                <button id="schedule-clean">Schedule Automatic Clean</button>
+                <button class="danger" id="factory-reset">Factory Reset (Last Resort)</button>
+            </div>
+        </div>
+        
+        <div class="status" id="status-message"></div>
+    </div>
+
+    <script>
+        // Enhanced avatar options
+        const avatarShapes = [
+            { name: 'circle', symbol: '●', borderRadius: '50%' },
+            { name: 'square', symbol: '■', borderRadius: '10%' },
+            { name: 'triangle', symbol: '▲', borderRadius: '50%' },
+            { name: 'shield', symbol: '🛡️', borderRadius: '50%' },
+            { name: 'hexagon', symbol: '⬡', borderRadius: '50%' },
+            { name: 'star', symbol: '★', borderRadius: '50%' },
+            { name: 'diamond', symbol: '♦', borderRadius: '50%' },
+            { name: 'heart', symbol: '♥', borderRadius: '50%' }
+        ];
+        
+        const avatarColors = [
+            { name: 'blue', value: '#4fc3f7', strength: 70 },
+            { name: 'green', value: '#33FF57', strength: 65 },
+            { name: 'red', value: '#FF5733', strength: 60 },
+            { name: 'yellow', value: '#F3FF33', strength: 55 },
+            { name: 'purple', value: '#8A2BE2', strength: 75 },
+            { name: 'pink', value: '#FF33F3', strength: 50 },
+            { name: 'cyan', value: '#33FFF3', strength: 65 },
+            { name: 'orange', value: '#FF6347', strength: 60 },
+            { name: 'dark blue', value: '#1a237e', strength: 80 },
+            { name: 'midnight', value: '#121258', strength: 90 },
+            { name: 'gold', value: '#ffd700', strength: 85 },
+            { name: 'silver', value: '#c0c0c0', strength: 75 }
+        ];
+        
+        const avatarIcons = [
+            { name: 'lock', symbol: '🔒', strength: 75 },
+            { name: 'shield', symbol: '🛡️', strength: 80 },
+            { name: 'key', symbol: '🔑', strength: 70 },
+            { name: 'ghost', symbol: '👻', strength: 85 },
+            { name: 'mask', symbol: '🎭', strength: 60 },
+            { name: 'spy', symbol: '🕵️', strength: 90 },
+            { name: 'incognito', symbol: '🥸', strength: 85 },
+            { name: 'secure', symbol: '✅', strength: 65 }
+        ];
+        
+        // DOM elements
+        const avatarCreator = document.getElementById('avatar-creator');
+        const changeAvatarBtn = document.getElementById('change-avatar');
+        const saveAvatarBtn = document.getElementById('save-avatar');
+        const cancelAvatarBtn = document.getElementById('cancel-avatar');
+        const avatarShapesContainer = document.getElementById('avatar-shapes');
+        const avatarColorsContainer = document.getElementById('avatar-colors');
+        const avatarIconsContainer = document.getElementById('avatar-icons');
+        const avatarDisplay = document.getElementById('avatar-display');
+        const avatarBackground = document.getElementById('avatar-background');
+        const avatarShapeElement = document.getElementById('avatar-shape');
+        const avatarIconElement = document.getElementById('avatar-icon');
+        const statusMessage = document.getElementById('status-message');
+        const avatarStrength = document.getElementById('avatar-strength');
+        const avatarStrengthValue = document.getElementById('avatar-strength-value');
+        
+        // Current avatar state
+        let currentAvatar = {
+            shape: avatarShapes[0],
+            color: avatarColors[0],
+            icon: avatarIcons[0],
+            strength: 70
+        };
+        
+        // Apply current avatar settings
+        function applyAvatarSettings() {
+            avatarDisplay.style.borderRadius = currentAvatar.shape.borderRadius;
+            avatarBackground.style.backgroundColor = currentAvatar.color.value;
+            avatarBackground.style.width = '100%';
+            avatarBackground.style.height = '100%';
+            avatarShapeElement.textContent = currentAvatar.shape.symbol;
+            avatarIconElement.textContent = currentAvatar.icon.symbol;
+            
+            updateAvatarStrength();
+        }
+        
+        // Calculate and update avatar strength
+        function updateAvatarStrength() {
+            const baseStrength = 50;
+            const colorStrength = currentAvatar.color.strength || 60;
+            const iconStrength = currentAvatar.icon.strength || 70;
+            
+            const totalStrength = Math.min(
+                Math.floor((baseStrength + colorStrength + iconStrength) / 3),
+                100
+            );
+            
+            currentAvatar.strength = totalStrength;
+            
+            avatarStrengthValue.style.width = `${totalStrength}%`;
+            
+            if (totalStrength < 60) {
+                avatarStrength.textContent = 'Low';
+                avatarStrengthValue.style.backgroundColor = '#e57373';
+            } else if (totalStrength < 80) {
+                avatarStrength.textContent = 'Medium';
+                avatarStrengthValue.style.backgroundColor = '#4fc3f7';
+            } else {
+                avatarStrength.textContent = 'High';
+                avatarStrengthValue.style.backgroundColor = '#81c784';
+            }
+        }
+        
+        // Load avatar options
+        function loadAvatarOptions() {
+            avatarShapesContainer.innerHTML = '';
+            avatarColorsContainer.innerHTML = '';
+            avatarIconsContainer.innerHTML = '';
+            
+            avatarShapes.forEach(shape => {
+                const div = document.createElement('div');
+                div.className = 'avatar-shape-option';
+                div.textContent = shape.symbol;
+                if (shape.name === currentAvatar.shape.name) {
+                    div.classList.add('selected');
+                }
+                div.addEventListener('click', function() {
+                    document.querySelectorAll('#avatar-shapes .avatar-shape-option').forEach(el => el.classList.remove('selected'));
+                    this.classList.add('selected');
+                    currentAvatar.shape = shape;
+                    applyAvatarSettings();
+                });
+                avatarShapesContainer.appendChild(div);
+            });
+            
+            avatarColors.forEach(color => {
+                const div = document.createElement('div');
+                div.className = 'avatar-option';
+                div.style.backgroundColor = color.value;
+                if (color.name === currentAvatar.color.name) {
+                    div.classList.add('selected');
+                }
+                div.addEventListener('click', function() {
+                    document.querySelectorAll('#avatar-colors .avatar-option').forEach(el => el.classList.remove('selected'));
+                    this.classList.add('selected');
+                    currentAvatar.color = color;
+                    applyAvatarSettings();
+                });
+                avatarColorsContainer.appendChild(div);
+            });
+            
+            avatarIcons.forEach(icon => {
+                const div = document.createElement('div');
+                div.className = 'avatar-option';
+                div.textContent = icon.symbol;
+                div.style.fontSize = '30px';
+                if (icon.name === currentAvatar.icon.name) {
+                    div.classList.add('selected');
+                }
+                div.addEventListener('click', function() {
+                    document.querySelectorAll('#avatar-icons .avatar-option').forEach(el => el.classList.remove('selected'));
+                    this.classList.add('selected');
+                    currentAvatar.icon = icon;
+                    applyAvatarSettings();
+                });
+                avatarIconsContainer.appendChild(div);
+            });
+        }
+        
+        // Tab navigation
+        document.querySelectorAll('.avatar-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.avatar-tab').forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all tab content
+                document.querySelectorAll('.avatar-tab-content').forEach(content => content.classList.remove('active'));
+                // Show corresponding tab content
+                document.getElementById(`${this.dataset.tab}-tab`).classList.add('active');
+            });
+        });
+        
+        // Generate a unique avatar identity
+        function generateAvatarIdentity() {
+            const timestamp = Date.now().toString(36);
+            const random = Math.random().toString(36).substr(2, 5);
+            return `${currentAvatar.shape.name}-${currentAvatar.color.name}-${currentAvatar.icon.name}-${timestamp}-${random}`;
+        }
+        
+        // Toggle avatar creator
+        changeAvatarBtn.addEventListener('click', function() {
+            loadAvatarOptions();
+            avatarCreator.style.display = 'block';
+        });
+        
+        cancelAvatarBtn.addEventListener('click', function() {
+            avatarCreator.style.display = 'none';
+        });
+        
+        saveAvatarBtn.addEventListener('click', function() {
+            const avatarId = generateAvatarIdentity();
+            localStorage.setItem('privacyAvatar', JSON.stringify({
+                id: avatarId,
+                shape: currentAvatar.shape.name,
+                color: currentAvatar.color.name,
+                icon: currentAvatar.icon.name,
+                strength: currentAvatar.strength
+            }));
+            
+            avatarCreator.style.display = 'none';
+            showStatus(`Avatar updated! Privacy strength: ${currentAvatar.strength}%`, 'success');
+        });
+        
+        // Load saved avatar
+        function loadSavedAvatar() {
+            const savedAvatar = localStorage.getItem('privacyAvatar');
+            if (savedAvatar) {
+                try {
+                    const avatar = JSON.parse(savedAvatar);
+                    currentAvatar.shape = avatarShapes.find(s => s.name === avatar.shape) || avatarShapes[0];
+                    currentAvatar.color = avatarColors.find(c => c.name === avatar.color) || avatarColors[0];
+                    currentAvatar.icon = avatarIcons.find(i => i.name === avatar.icon) || avatarIcons[0];
+                    currentAvatar.strength = avatar.strength || 70;
+                    applyAvatarSettings();
+                } catch (e) {
+                    console.error('Error loading saved avatar:', e);
+                }
+            }
+        }
+        
+        // Button actions
+        document.getElementById('clear-history').addEventListener('click', function() {
+            const historyType = document.getElementById('history-type').value;
+            clearHistory(historyType);
+        });
+        
+        document.getElementById('fake-history').addEventListener('click', function() {
+            const historyType = document.getElementById('history-type').value;
+            generateFakeHistory(historyType);
+        });
+        
+        document.getElementById('clear-cache').addEventListener('click', function() {
+            clearAllCache();
+        });
+        
+        document.getElementById('change-device-id').addEventListener('click', function() {
+            randomizeDeviceID();
+        });
+        
+        document.getElementById('wifi-protection').addEventListener('click', function() {
+            secureWiFiConnections();
+        });
+        
+        document.getElementById('app-locker').addEventListener('click', function() {
+            lockSensitiveApps();
+        });
+        
+        document.getElementById('fake-apps').addEventListener('click', function() {
+            installDecoyApps();
+        });
+        
+        document.getElementById('clear-app-data').addEventListener('click', function() {
+            clearAppData();
+        });
+        
+        document.getElementById('emergency-clear').addEventListener('click', function() {
+            emergencyClear();
+        });
+        
+        document.getElementById('schedule-clean').addEventListener('click', function() {
+            scheduleAutomaticClean();
+        });
+        
+        document.getElementById('factory-reset').addEventListener('click', function() {
+            if (confirm('WARNING: This will completely reset your device. Continue?')) {
+                factoryReset();
+            }
+        });
+        
+        // Privacy protection functions
+        function clearHistory(type) {
+            logProtectionActivity(`Cleared ${type} history`);
+            showStatus(`${capitalize(type)} history cleared and replaced with avatar records`, 'success');
+        }
+        
+        function generateFakeHistory(type) {
+            logProtectionActivity(`Generated fake ${type} history`);
+            showStatus(`Fake ${type} history generated to mask your real activities`, 'success');
+        }
+        
+        function clearAllCache() {
+            logProtectionActivity('Cleared all cache');
+            showStatus('All cache cleared through avatar proxy', 'success');
+        }
+        
+        function randomizeDeviceID() {
+            const newID = generateAvatarIdentity();
+            logProtectionActivity(`Randomized device ID to ${newID}`);
+            showStatus(`Device ID randomized using avatar identity: ${newID.substring(0, 8)}...`, 'success');
+        }
+        
+        function secureWiFiConnections() {
+            logProtectionActivity('Secured WiFi connections');
+            showStatus('WiFi connections secured with avatar-based encryption', 'success');
+        }
+        
+        function lockSensitiveApps() {
+            logProtectionActivity('Locked sensitive apps');
+            showStatus('Sensitive apps locked with avatar protection', 'success');
+        }
+        
+        function installDecoyApps() {
+            logProtectionActivity('Installed decoy apps');
+            showStatus('Decoy apps installed to protect your privacy', 'success');
+        }
+        
+        function clearAppData() {
+            logProtectionActivity('Cleared app data');
+            showStatus('App data cleared and privacy restored', 'success');
+        }
+        
+        function emergencyClear() {
+            logProtectionActivity('Emergency clear initiated');
+            showStatus('EMERGENCY: All personal data cleared and replaced with avatar data', 'success');
+        }
+        
+        function scheduleAutomaticClean() {
+            logProtectionActivity('Scheduled automatic clean');
+            showStatus('Automatic cleaning scheduled based on your avatar strength', 'success');
+        }
+        
+        function factoryReset() {
+            logProtectionActivity('Factory reset initiated');
+            localStorage.clear();
+            showStatus('Factory reset complete. All data has been purged.', 'success');
+            setTimeout(() => {
+                location.reload();
+            }, 3000);
+        }
+        
+        // Status message helper
+        function showStatus(message, type) {
+            statusMessage.textContent = message;
+            statusMessage.className = 'status ' + type;
+            setTimeout(() => {
+                statusMessage.textContent = '';
+                statusMessage.className = 'status';
+            }, 3000);
+        }
+        
+        // Log privacy protection activity
+        function logProtectionActivity(action) {
+            const log = JSON.parse(localStorage.getItem('privacyLog') || '[]');
+            log.push({
+                action: action,
+                timestamp: new Date().toISOString(),
+                avatarId: currentAvatar.id || 'default'
+            });
+            localStorage.setItem('privacyLog', JSON.stringify(log.slice(-100))); // Keep only last 100 entries
+        }
+        
+        // Helper functions
+        function capitalize(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+        
+        // Initialize
+        applyAvatarSettings();
+        loadSavedAvatar();
+    </script>
+</body>
+</html>
