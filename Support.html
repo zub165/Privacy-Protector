@@ -1,145 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Support - Privacy Protector</title>
-    <style>
-      :root {
-        --bg: #0b1020;
-        --panel: rgba(255, 255, 255, 0.06);
-        --border: rgba(255, 255, 255, 0.12);
-        --text: rgba(255, 255, 255, 0.92);
-        --muted: rgba(255, 255, 255, 0.72);
-        --brand: #4fc3f7;
-      }
-      * { box-sizing: border-box; }
-      body {
-        margin: 0;
-        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-        color: var(--text);
-        background:
-          radial-gradient(900px 500px at 20% 0%, rgba(79,195,247,0.22), transparent 60%),
-          radial-gradient(800px 500px at 90% 10%, rgba(129,199,132,0.16), transparent 60%),
-          var(--bg);
-      }
-      a { color: var(--brand); text-decoration: none; }
-      a:hover { text-decoration: underline; }
-      .wrap { max-width: 900px; margin: 0 auto; padding: 28px 18px 40px; }
-      .nav {
-        display: flex; align-items: center; justify-content: space-between; gap: 12px;
-        padding: 14px 16px;
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        background: rgba(0,0,0,0.2);
-        backdrop-filter: blur(10px);
-      }
-      .brand { font-weight: 800; display: flex; align-items: center; gap: 10px; }
-      .logo {
-        width: 34px; height: 34px; border-radius: 12px;
-        display: grid; place-items: center;
-        background: rgba(79,195,247,0.14);
-        border: 1px solid var(--border);
-      }
-      .pill {
-        display: inline-flex; align-items: center;
-        padding: 8px 12px;
-        border: 1px solid var(--border);
-        border-radius: 999px;
-        background: rgba(255,255,255,0.04);
-        color: var(--text);
-        font-size: 14px;
-      }
-      h1 { margin: 18px 0 6px; font-size: 30px; }
-      p { color: var(--muted); line-height: 1.6; }
-      .card {
-        margin-top: 14px;
-        border: 1px solid var(--border);
-        background: var(--panel);
-        border-radius: 16px;
-        padding: 16px;
-      }
-      h2 { margin: 0 0 10px; font-size: 16px; }
-      ul { margin: 8px 0 0; padding-left: 18px; color: var(--muted); }
-      li { margin: 8px 0; }
-      code {
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-        background: rgba(0,0,0,0.28);
-        border: 1px solid rgba(255,255,255,0.10);
-        padding: 2px 6px;
-        border-radius: 8px;
-        color: rgba(255,255,255,0.88);
-      }
-    </style>
-  </head>
-  <body>
-    <div class="wrap">
-      <div class="nav">
-        <div class="brand">
-          <div class="logo" aria-hidden="true">🛟</div>
-          <div>Privacy Protector Support</div>
-        </div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="pill" href="index.html">Home</a>
-          <a class="pill" href="Privacy.htm">Privacy</a>
-          <a class="pill" href="https://github.com/zub165/Privacy-Protector/issues">GitHub Issues</a>
-        </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support &amp; Data Deletion · Privacy Vault PRO</title>
+  <meta name="description" content="Support and data deletion for Privacy Vault PRO by Innovators Generation.">
+  <style>
+    :root { --bg:#0b1020; --panel:rgba(255,255,255,.06); --border:rgba(255,255,255,.12); --text:rgba(255,255,255,.92); --muted:rgba(255,255,255,.72); --brand:#4fc3f7; }
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--text);background:radial-gradient(900px 500px at 20% 0%,rgba(79,195,247,.22),transparent 60%),var(--bg);line-height:1.6}
+    a{color:var(--brand)} .wrap{max-width:900px;margin:0 auto;padding:28px 18px 48px}
+    .nav{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 16px;border:1px solid var(--border);border-radius:14px;background:rgba(0,0,0,.2)}
+    .pill{display:inline-flex;padding:8px 12px;border:1px solid var(--border);border-radius:999px;color:var(--text);text-decoration:none;font-size:14px}
+    h1{font-size:30px;margin:18px 0 8px} h2{font-size:18px;margin:0 0 10px;color:var(--brand)} p,li{color:var(--muted)}
+    .card{margin-top:14px;border:1px solid var(--border);background:var(--panel);border-radius:16px;padding:18px}
+    ul,ol{padding-left:20px} li{margin:8px 0} footer{margin-top:28px;text-align:center;font-size:13px;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav class="nav">
+      <strong>Privacy Vault PRO</strong>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <a class="pill" href="index.html">Home</a>
+        <a class="pill" href="privacy.html">Privacy</a>
+        <a class="pill" href="delete.html">Delete data</a>
       </div>
+    </nav>
 
-      <h1>Support</h1>
-      <p>
-        If you need help or want to request a feature, open a GitHub issue or email us.
-      </p>
+    <h1>Support &amp; Data Deletion</h1>
 
-      <div class="card">
-        <h2>Contact</h2>
-        <ul>
-          <li><strong>Email:</strong> <a href="mailto:privacy@privacyprotector.app">privacy@privacyprotector.app</a></li>
-          <li><strong>Issues:</strong> <a href="https://github.com/zub165/Privacy-Protector/issues">github.com/zub165/Privacy-Protector/issues</a></li>
-        </ul>
-      </div>
+    <section class="card">
+      <h2>App &amp; developer</h2>
+      <ul>
+        <li><strong>App name:</strong> Privacy Vault PRO</li>
+        <li><strong>Developer / legal entity:</strong> Innovators Generation</li>
+        <li><strong>Contact:</strong> <a href="mailto:zub165@yahoo.com">zub165@yahoo.com</a></li>
+        <li><strong>Android app ID:</strong> com.privacyprotector.app</li>
+        <li><strong>iOS bundle ID:</strong> com.privacyprotector.app</li>
+      </ul>
+      <p><em>Last updated: September 12, 2026</em></p>
+    </section>
 
-      <div class="card">
-        <h2 id="delete-data">Delete data</h2>
-        <p>
-          Privacy Protector provides on-device tools so you can delete app data and cleanup duplicates. Deletion actions require
-          confirmation and use your device’s permissions (Contacts/Photos) only when you choose those features.
-        </p>
-        <ul>
-          <li><strong>Settings → Erase app files</strong>: deletes Privacy Protector’s files (documents/cache/temp) and demo data.</li>
-          <li><strong>Controls → Emergency clear</strong>: resets in-app logs, caches, and most preferences.</li>
-          <li><strong>Controls → Duplicate contacts</strong>: scans contacts and deletes duplicates (keeps 1, deletes the rest).</li>
-          <li><strong>Controls → Duplicate photos</strong>: scans photos for exact/similar duplicates and deletes after confirmation.</li>
-        </ul>
-        <p class="muted">
-          If you want to request deletion help, email <a href="mailto:privacy@privacyprotector.app">privacy@privacyprotector.app</a>
-          with your app name and your device type (Android/iOS).
-        </p>
-      </div>
+    <section class="card" id="account-deletion">
+      <h2>Account &amp; data deletion</h2>
+      <p><strong>Privacy Vault PRO does not require creating a login account.</strong> Core features work offline on your device.</p>
+      <p>If you configured an optional backend URL/API key, anonymized event logs may be sent to that server. You can delete all associated data as follows.</p>
+      <h3>In-app deletion (recommended)</h3>
+      <ol>
+        <li>Open <strong>Privacy Vault PRO</strong>.</li>
+        <li>Go to <strong>Settings</strong>.</li>
+        <li>Tap <strong>Delete all my data</strong> and confirm.</li>
+      </ol>
+      <p>This removes privacy logs, avatars, cache/temp files, API key, backend URL, and the app device identifier.</p>
+      <h3>Web / email request</h3>
+      <p>Email <a href="mailto:zub165@yahoo.com?subject=Delete%20My%20Data%20-%20Privacy%20Vault%20PRO">zub165@yahoo.com</a> with subject <code>Delete My Data</code>. Include Android or iOS and approximate dates of use. We process requests within 30 days.</p>
+      <p>Dedicated deletion page: <a href="delete.html">delete.html</a></p>
+      <h3>Uninstall</h3>
+      <p>Uninstalling the app removes sandbox data on the device.</p>
+    </section>
 
-      <div class="card">
-        <h2>How to clear other apps (system steps)</h2>
-        <p>
-          Operating systems protect apps from deleting each other’s private data. Privacy Protector can open system screens, but you confirm actions.
-        </p>
-        <ul>
-          <li><strong>Android:</strong> Settings → Apps → (Select app) → Storage & cache → Clear cache / Clear storage.</li>
-          <li><strong>iOS:</strong> Settings → General → iPhone Storage → (Select app) → Offload App / Delete App.</li>
-        </ul>
-      </div>
+    <section class="card">
+      <h2>Contact</h2>
+      <ul>
+        <li>Email: <a href="mailto:zub165@yahoo.com">zub165@yahoo.com</a></li>
+        <li>Issues: <a href="https://github.com/zub165/Privacy-Protector/issues">GitHub Issues</a></li>
+      </ul>
+    </section>
 
-      <div class="card">
-        <h2>Django backend (optional)</h2>
-        <p>
-          You can configure a base URL like <code>https://api.yoursite.com:8001</code> in the app Settings.
-          The backend can accept event logs (audit/analytics), but it cannot delete data on the device.
-        </p>
-        <ul>
-          <li><code>GET /api/v1/health/</code> → returns <code>{"status":"ok"}</code></li>
-          <li><code>POST /api/v1/privacy-events/</code> → accepts event JSON, optional <code>Authorization: Bearer ...</code></li>
-        </ul>
-      </div>
-    </div>
-  </body>
+    <footer>
+      <p>© 2026 Innovators Generation · Privacy Vault PRO</p>
+      <p><a href="privacy.html">Privacy Policy</a> · <a href="delete.html">Delete data</a></p>
+    </footer>
+  </div>
+</body>
 </html>
-
